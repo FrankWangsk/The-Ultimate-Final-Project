@@ -2,11 +2,11 @@ import java.awt.*;
 
 public abstract class GameObject {
 
-    protected GamePanel panel;
-    protected int x;
-    protected int y;
-    protected int width;
-    protected int height;
+    public GamePanel panel;
+    public int x;
+    public int y;
+    public int width;
+    public int height;
 
     public GameObject(GamePanel panel, int x, int y, int width, int height) {
         this.panel = panel;

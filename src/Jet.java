@@ -6,14 +6,21 @@ public class Jet extends GameObject implements KeyListener {
 
     private final boolean controlling;
     private int shootTimer;
+    private int health;
 
-    public Jet(GamePanel panel, int x, int y) {
-        this(panel, false, x, y);
-    }
+
 
     public Jet(GamePanel panel, boolean controlling, int x, int y) {
         super(panel, x, y, 100, 100);
         this.controlling = controlling;
+        this.health = 100;
+    }
+
+    public void takeDamge(int damage){
+        health -= damage;
+        if(health < 0){
+            health = 0;
+        }
     }
 
     @Override
@@ -29,6 +36,11 @@ public class Jet extends GameObject implements KeyListener {
     @Override
     public void paint(Graphics g) {
         g.drawImage(Resources.MY_JET, x, y, 100, 100, null);
+        g.setColor(Color.GREEN);
+        g.fillRect(x, y + 110, 100, 10);
+        g.setColor(Color.RED);
+        System.out.println(health);
+        g.fillRect(x, y + 110, 100 - health, 10);
     }
 
     @Override
