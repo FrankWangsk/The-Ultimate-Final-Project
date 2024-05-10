@@ -7,18 +7,22 @@ import java.util.List;
 public class GamePanel extends JPanel {
 
     private final SkyForceGame game;
+
+    private EnemyJet enemyJet;
     private final List<GameObject> objects = new ArrayList<>();
 
     public GamePanel(SkyForceGame game) {
         this.game = game;
         Jet jet = new Jet(this, true, 50, 50);
         addObject(jet);
+        enemyJet = new EnemyJet(0, 50, 3);
     }
 
     public void tick() {
         for (GameObject object : List.copyOf(objects)) {
             object.tick();
         }
+        enemyJet.update();
     }
 
     public void addObject(GameObject object) {
@@ -40,5 +44,6 @@ public class GamePanel extends JPanel {
         for (GameObject object : objects) {
             object.paint(g);
         }
+        enemyJet.draw(g);
     }
 }
