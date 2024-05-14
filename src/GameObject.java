@@ -1,28 +1,32 @@
+import javax.swing.*;
 import java.awt.*;
 
 public abstract class GameObject {
 
-    public GamePanel panel;
-    public int x;
-    public int y;
-    public int width;
-    public int height;
+    public Vector position;
+    public Vector size;
+    public Vector velocity = new Vector();
 
-    public GameObject(GamePanel panel, int x, int y, int width, int height) {
-        this.panel = panel;
-        this.x = x;
-        this.y = y;
-        this.width = width;
-        this.height = height;
+    public GameObject(Vector position, Vector size) {
+        this.position = position.copy();
+        this.size = size.copy();
     }
 
     public abstract void paint(Graphics graphics);
 
     public void repaint() {
-        panel.repaint();
+        SwingUtilities.invokeLater(() -> SkyForceGame.getPanel().repaint());
     }
 
     public void tick() {
-
+        if (!velocity.isZero()) {
+            position.add(velocity);
+            repaint();
+        }
     }
+
+    public void remove() {
+        SkyForceGame.getPanel().removeObject(this);
+    }
+
 }

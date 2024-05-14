@@ -2,25 +2,42 @@ import java.awt.*;
 
 public class Bullet extends GameObject {
 
-    private final int xSpeed;
-    private final int ySpeed;
+    private final boolean mine;
 
-    public Bullet(GamePanel panel, int x, int y, int xSpeed, int ySpeed) {
-        super(panel, x, y, 10, 10);
-        this.xSpeed = xSpeed;
-        this.ySpeed = ySpeed;
+    public Bullet(boolean mine, Vector position, Vector velocity) {
+        super(position, new Vector(10, 10));
+        this.mine = mine;
+        this.velocity = velocity;
     }
 
     @Override
     public void tick() {
-        x += xSpeed;
-        y += ySpeed;
-        repaint();
+        super.tick();
+        if (position.x() <= 0 || position.y() <= 0 || position.x() >= SkyForceGame.getInstance().getWidth() || position.y() >= SkyForceGame.getInstance().getHeight())
+            remove();
+
+        for (GameObject object : SkyForceGame.getPanel().getColliding(this)) {
+            if (mine && object instanceof EnemyJet jet) {
+                jet.remove();
+                remove();
+                return;
+            }
+            if (!mine && object instanceof MyJet jet) {
+                jet.takeDamage(10);
+                remove();
+                return;
+            }
+        }
+
     }
 
     @Override
     public void paint(Graphics graphics) {
-        graphics.setColor(Color.BLACK);
-        graphics.drawRect(x, y, width, height);
+        if (mine) {
+            graphics.setColor(Color.BLACK);
+        } else {
+            graphics.setColor(Color.RED);
+        }
+        graphics.drawRect(position.getX(), position.getY(), size.getX(), size.getY());
     }
 }

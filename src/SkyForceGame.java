@@ -2,54 +2,63 @@ import javax.swing.*;
 
 public class SkyForceGame extends JFrame {
 
-    private final GamePanel panel = new GamePanel(this);
+    private static SkyForceGame GAME;
+
+    private final GamePanel panel;
 
     public SkyForceGame() {
+        GAME = this;
+        panel = new GamePanel();
+        panel.init();
         setSize(1024, 768);
         setContentPane(panel);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // Properly exit the application when window is closed
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setVisible(true);
 
         runGameLoop();
     }
 
     private void runGameLoop() {
-        Thread gameThread = new Thread(new Runnable() {
-            public void run() {
-                long now;
-                long updateTime;
-                long wait;
+        Thread gameThread = new Thread(() -> {
+            long now;
+            long updateTime;
+            long wait;
 
-                final int TARGET_FPS = 60;
-                final long OPTIMAL_TIME = 1000000000 / TARGET_FPS;
+            final int TARGET_FPS = 60;
+            final long OPTIMAL_TIME = 1000000000 / TARGET_FPS;
 
-                while (true) {
-                    now = System.nanoTime();
+            while (true) {
+                now = System.nanoTime();
 
-                    panel.tick();
+                panel.tick();
 
-                    updateTime = System.nanoTime() - now;
-                    wait = (OPTIMAL_TIME - updateTime) / 1000000;
+                updateTime = System.nanoTime() - now;
+                wait = (OPTIMAL_TIME - updateTime) / 1000000;
 
-                    try {
-                        if (wait > 0) {
-                            Thread.sleep(wait);
-                        }
-                    } catch (Exception e) {
-                        e.printStackTrace();
+                try {
+                    if (wait > 0) {
+                        Thread.sleep(wait);
                     }
-                    panel.repaint();
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
+                panel.repaint();
             }
         });
         gameThread.start();
     }
 
     public static void main(String[] args) {
-        SwingUtilities.invokeLater(new Runnable() {
-            public void run() {
-                new SkyForceGame();
-            }
-        });
+        SwingUtilities.invokeLater(SkyForceGame::new);
     }
+
+
+    public static SkyForceGame getInstance() {
+        return GAME;
+    }
+
+    public static GamePanel getPanel() {
+        return GAME.panel;
+    }
+
 }

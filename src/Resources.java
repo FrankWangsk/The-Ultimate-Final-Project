@@ -6,6 +6,8 @@ import java.io.IOException;
 public class Resources {
 
     public static Image MY_JET = readImage("src/myjet.jpg");
+    public static Image ENEMY_JET = readImage("src/enemyjet.jpg");
+
 
     private static Image readImage(String path) {
         try {
