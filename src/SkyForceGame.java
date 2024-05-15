@@ -8,6 +8,7 @@ public class SkyForceGame extends JFrame {
 
     private final GamePanel panel;
 
+    private boolean gameOver = false;
 
     public SkyForceGame() {
         GAME = this;
@@ -20,6 +21,10 @@ public class SkyForceGame extends JFrame {
 
         runGameLoop();
 
+    }
+    public void endGame() {
+        gameOver = true;
+        System.out.println("Game Over");
     }
     private ScoreManager ScoreManager = new ScoreManager();
     public ScoreManager getScoreManager(){
@@ -35,7 +40,7 @@ public class SkyForceGame extends JFrame {
             final int TARGET_FPS = 60;
             final long OPTIMAL_TIME = 1000000000 / TARGET_FPS;
 
-            while (true) {
+            while (!gameOver) {
                 now = System.nanoTime();
 
                 panel.tick();

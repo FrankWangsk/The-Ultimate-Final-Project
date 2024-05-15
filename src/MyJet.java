@@ -18,6 +18,10 @@ public class MyJet extends GameObject implements KeyListener {
         if (health < 0) {
             health = 0;
         }
+        if (health == 0) {
+            SkyForceGame.getPanel().removeKeyListener(this);
+            SkyForceGame.getInstance().endGame();
+        }
     }
 
     @Override
