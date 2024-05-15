@@ -9,6 +9,7 @@ public class GamePanel extends JPanel {
     private final List<GameObject> objects = new ArrayList<>();
 
     private int enemyJetSpawnTimer = 0;
+    JPanel scoreBoard;
 
     public GamePanel() {
     }
@@ -51,6 +52,8 @@ public class GamePanel extends JPanel {
         for (GameObject object : getObjects()) {
             object.paint(g);
         }
+        g.setColor(Color.BLACK);
+        g.drawString("Score: " + SkyForceGame.getInstance().getScoreManager().getScore(), 10, 20);
     }
 
     public List<GameObject> getObjects() {

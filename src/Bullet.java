@@ -20,6 +20,7 @@ public class Bullet extends GameObject {
             if (mine && object instanceof EnemyJet jet) {
                 jet.remove();
                 remove();
+                SkyForceGame.getInstance().getScoreManager().addScore(10);
                 return;
             }
             if (!mine && object instanceof MyJet jet) {
@@ -28,7 +29,6 @@ public class Bullet extends GameObject {
                 return;
             }
         }
-
     }
 
     @Override

@@ -1,3 +1,5 @@
+import Score.ScoreManager;
+
 import javax.swing.*;
 
 public class SkyForceGame extends JFrame {
@@ -5,6 +7,7 @@ public class SkyForceGame extends JFrame {
     private static SkyForceGame GAME;
 
     private final GamePanel panel;
+
 
     public SkyForceGame() {
         GAME = this;
@@ -16,6 +19,11 @@ public class SkyForceGame extends JFrame {
         setVisible(true);
 
         runGameLoop();
+
+    }
+    private ScoreManager ScoreManager = new ScoreManager();
+    public ScoreManager getScoreManager(){
+        return ScoreManager;
     }
 
     private void runGameLoop() {
@@ -47,6 +55,7 @@ public class SkyForceGame extends JFrame {
         });
         gameThread.start();
     }
+
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(SkyForceGame::new);
