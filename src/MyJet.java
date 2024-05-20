@@ -2,46 +2,43 @@ import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
-public class MyJet extends GameObject implements KeyListener {
+public class MyJet extends DamageableObject implements KeyListener {
 
     private int shootTimer;
-    private int health;
 
     public MyJet(Vector pos) {
-        super(pos, new Vector(100, 100));
-        this.health = 100;
+        super(10000, pos, new Vector(100, 100));
         SkyForceGame.getPanel().addKeyListener(this);
     }
 
-    public void takeDamage(int damage) {
-        health -= damage;
-        if (health < 0) {
-            health = 0;
-        }
-        if (health == 0) {
-            SkyForceGame.getPanel().removeKeyListener(this);
-            SkyForceGame.getInstance().endGame();
-        }
+    @Override
+    protected void onDeath() {
+        SkyForceGame.getInstance().endGame();
     }
 
     @Override
     public void tick() {
         super.tick();
         shootTimer++;
-        if (shootTimer >= 60) {
+        if (shootTimer >= ((SkyForceGame.getPanel().isInBossFight() ? 20 : 60) - SkyForceGame.getInstance().getScoreManager().getLevel() * 5)) {
             shootTimer = 0;
-            Bullet bullet = new Bullet(true, new Vector(position.x() + size.x() / 2, position.y()), new Vector(velocity.x(), -5));
-            SkyForceGame.getPanel().addObject(bullet);
+            spawnBullet(0, -5);
+            if (SkyForceGame.getPanel().isInBossFight()) {
+                spawnBullet(-5, -5);
+                spawnBullet(5, -5);
+            }
         }
+    }
+
+    private void spawnBullet(double x, double y) {
+        Bullet bullet = new Bullet(this, new Vector(position.x() + size.x() / 2, position.y()), new Vector(x, y));
+        SkyForceGame.getPanel().addObject(bullet);
     }
 
     @Override
     public void paint(Graphics g) {
         g.drawImage(Resources.MY_JET, position.getX(), position.getY(), 100, 100, null);
-        g.setColor(Color.GREEN);
-        g.fillRect(position.getX(), position.getY() + 110, health, 10);
-        g.setColor(Color.RED);
-        g.fillRect(position.getX() + health, position.getY() + 110, 100 - health, 10);
+        drawHealthBar(g);
     }
 
     @Override
@@ -75,5 +72,5 @@ public class MyJet extends GameObject implements KeyListener {
             velocity.setY(0);
         }
     }
-}
 
+}

@@ -16,8 +16,16 @@ public class Vector {
         return (int) x;
     }
 
+    public void setX(double x) {
+        this.x = x;
+    }
+
     public int getY() {
         return (int) y;
+    }
+
+    public void setY(double y) {
+        this.y = y;
     }
 
     public double x() {
@@ -26,14 +34,6 @@ public class Vector {
 
     public double y() {
         return y;
-    }
-
-    public void setX(double x) {
-        this.x = x;
-    }
-
-    public void setY(double y) {
-        this.y = y;
     }
 
     public void add(Vector other) {
