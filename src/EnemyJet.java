@@ -12,6 +12,7 @@ public class EnemyJet extends DamageableObject {
         this.velocity = velocity;
     }
 
+
     public static EnemyJet createRandom() {
         Vector size = new Vector(50, 50);
         return new EnemyJet(10, randomPos(size), size,

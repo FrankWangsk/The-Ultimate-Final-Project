@@ -14,6 +14,7 @@ public class Bullet extends GameObject {
         this.parent = parent;
     }
 
+
     @Override
     public void tick() {
         if (parent != null) {

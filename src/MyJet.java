@@ -30,6 +30,7 @@ public class MyJet extends DamageableObject implements KeyListener {
         }
     }
 
+
     private void spawnBullet(double x, double y) {
         Bullet bullet = new Bullet(this, new Vector(position.x() + size.x() / 2, position.y()), new Vector(x, y));
         SkyForceGame.getPanel().addObject(bullet);

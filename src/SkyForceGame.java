@@ -43,6 +43,7 @@ public class SkyForceGame extends JFrame {
         return ScoreManager;
     }
 
+
     private void runGameLoop() {
         Thread gameThread = new Thread(() -> {
             long now;
