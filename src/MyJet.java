@@ -20,12 +20,13 @@ public class MyJet extends DamageableObject implements KeyListener {
     public void tick() {
         super.tick();
         shootTimer++;
-        if (shootTimer >= ((SkyForceGame.getPanel().isInBossFight() ? 20 : 60) - SkyForceGame.getInstance().getScoreManager().getLevel() * 5)) {
+        if (shootTimer >= 60 - Upgrades.SHOOTING_SPEED.getLevel() * 5) {
             shootTimer = 0;
-            spawnBullet(0, -5);
-            if (SkyForceGame.getPanel().isInBossFight()) {
-                spawnBullet(-5, -5);
-                spawnBullet(5, -5);
+            double speed = Upgrades.BULLET_SPEED.getLevel();
+            spawnBullet(0, -5 - speed);
+            if (Upgrades.TRISHOOT.getLevel() > 0) {
+                spawnBullet(-5, -5 - speed);
+                spawnBullet(5, -5 - speed);
             }
         }
     }

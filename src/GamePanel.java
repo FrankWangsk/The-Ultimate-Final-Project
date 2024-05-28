@@ -3,34 +3,53 @@ import java.awt.*;
 import java.awt.event.KeyListener;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public class GamePanel extends JPanel {
 
-    private final List<GameObject> objects = new ArrayList<>();
+    private final List<GameObject> objects = new CopyOnWriteArrayList<>();
+    private int enemyJetSpawnTimer = 23520;
 
-    private int enemyJetSpawnTimer = 0;
-    JPanel scoreBoard;
+    private List<EnemyJet> bosses = new ArrayList<>();
 
     public GamePanel() {
+
     }
 
     public void init() {
         MyJet jet = new MyJet(new Vector(50, 50));
         addObject(jet);
-        EnemyJet enemyJet = new EnemyJet(new Vector(0, 50), new Vector(5, 0));
-        addObject(enemyJet);
     }
 
     public void tick() {
         for (GameObject object : getObjects()) {
             object.tick();
         }
-        if (enemyJetSpawnTimer > 300) {
+
+        if (!isInBossFight() && enemyJetSpawnTimer > 400 - (3 * Math.log10(SkyForceGame.getInstance().getScoreManager().getLevel() * 100))) {
             enemyJetSpawnTimer = 0;
             EnemyJet jet = EnemyJet.createRandom();
             addObject(jet);
         }
         enemyJetSpawnTimer++;
+    }
+
+    public boolean isInBossFight() {
+        return !bosses.isEmpty();
+    }
+
+    public void enterBossFight(int amount) {
+        getObjects().forEach(object -> {
+            if (object instanceof EnemyJet)
+                removeObject(object);
+        });
+
+        for (int i = 0; i < amount; i++) {
+            EnemyJet jet = EnemyJet.createBoss();
+            addObject(jet);
+            bosses.add(jet);
+        }
+
     }
 
     public void addObject(GameObject object) {
@@ -44,6 +63,8 @@ public class GamePanel extends JPanel {
         if (object instanceof KeyListener listener)
             SkyForceGame.getInstance().removeKeyListener(listener);
         objects.remove(object);
+        if (object instanceof EnemyJet)
+            bosses.remove(object);
     }
 
     @Override
@@ -54,10 +75,14 @@ public class GamePanel extends JPanel {
         }
         g.setColor(Color.BLACK);
         g.drawString("Score: " + SkyForceGame.getInstance().getScoreManager().getScore(), 10, 20);
+        g.drawString("Level: " + SkyForceGame.getInstance().getScoreManager().getLevel(), 10, 40);
+        g.drawString("Objects: " + objects.size(), 10, getHeight() - 10);
+        g.drawString("Money: " + SkyForceGame.getInstance().getScoreManager().getMoney(), getWidth() - 100, 20);
+
     }
 
     public List<GameObject> getObjects() {
-        return new ArrayList<>(objects);
+        return objects;
     }
 
     public List<GameObject> getColliding(GameObject object) {
@@ -75,7 +100,5 @@ public class GamePanel extends JPanel {
             }
             return !(y1 + h1 < y2) && !(y2 + h2 < y1);
         }).toList();
-
     }
-
 }

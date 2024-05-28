@@ -49,10 +49,11 @@ public class EnemyJet extends DamageableObject {
             velocity.multiply(1, -1);
         }
         shootTimer++;
-        if (shootTimer >= 70 - SkyForceGame.getInstance().getScoreManager().getLevel() * 20) {
+        if (shootTimer >= 70 - SkyForceGame.getInstance().getScoreManager().getLevel() * 5) {
             shootTimer = 0;
             Bullet bullet = new Bullet(new Vector(position.x() + size.x() / 2, position.y()), new Vector(0, 5));
             SkyForceGame.getPanel().addObject(bullet);
+
         }
     }
 

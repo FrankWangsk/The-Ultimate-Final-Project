@@ -6,7 +6,7 @@ public abstract class GameObject {
     public Vector size;
     public Vector velocity = new Vector();
 
-    public  GameObject(Vector position, Vector size) {
+    public GameObject(Vector position, Vector size) {
         this.position = position.copy();
         this.size = size.copy();
     }
