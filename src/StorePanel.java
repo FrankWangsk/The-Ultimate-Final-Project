@@ -53,7 +53,7 @@ public class StorePanel extends JPanel {
             upgradeButton = new JButton();
             upgradeButton.setFocusable(false);
             upgradeButton.setAlignmentX(Component.CENTER_ALIGNMENT);
-            upgradeButton.addActionListener(_ -> {
+            upgradeButton.addActionListener(e -> {
                 if (upgrade.canUpgrade() && scoreManager.getMoney() >= upgrade.getPrice()) {
                     scoreManager.setMoney(scoreManager.getMoney() - upgrade.getPrice());
                     upgrade.upgrade();

@@ -21,14 +21,12 @@ public class EnemyJet extends DamageableObject {
 
     public static EnemyJet createBoss() {
         Vector size = new Vector(150, 150);
-        return new EnemyJet(100, randomPos(size), size,
-                new Vector(15, 15));
+        return new EnemyJet(100, randomPos(size), size, new Vector(15, 15));
     }
 
     public static Vector randomPos(Vector size) {
         int width = SkyForceGame.getInstance().getWidth();
         int height = SkyForceGame.getInstance().getHeight();
-
 
         return new Vector(random.nextDouble(width - size.x()), random.nextDouble(height - size.y()));
     }
@@ -37,6 +35,10 @@ public class EnemyJet extends DamageableObject {
     protected void onDeath() {
         super.onDeath();
         SkyForceGame.getInstance().getScoreManager().addScore(10);
+        int chance = random.nextInt(100);
+        if (chance < 30){
+            ShieldBattery.spawnRandom();
+        }
     }
 
     @Override

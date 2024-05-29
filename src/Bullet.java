@@ -1,7 +1,6 @@
 import java.awt.*;
 
 public class Bullet extends GameObject {
-
     private final MyJet parent;
 
     public Bullet(Vector position, Vector velocity) {
@@ -28,6 +27,7 @@ public class Bullet extends GameObject {
         for (GameObject object : SkyForceGame.getPanel().getColliding(this)) {
             if (parent != null && object instanceof EnemyJet jet) {
                 jet.damage(10);
+                parent.addEvoPoints(10);
                 remove();
                 return;
             }

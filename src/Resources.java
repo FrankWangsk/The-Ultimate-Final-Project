@@ -7,6 +7,9 @@ public class Resources {
 
     public static Image MY_JET = readImage("src/myjet.jpg");
     public static Image ENEMY_JET = readImage("src/enemyjet.jpg");
+    public static Image BIG_SHIELD = readImage("src/bigshield.png");
+    public static Image SMALL_SHIELD = readImage("src/smallshield.png");
+
 
 
     private static Image readImage(String path) {
