@@ -5,8 +5,8 @@ import java.io.IOException;
 
 public class Resources {
 
-    public static Image MY_JET = readImage("src/myjet.jpg");
-    public static Image ENEMY_JET = readImage("src/enemyjet.jpg");
+    public static Image MY_JET = readImage("src/myjet.png");
+    public static Image ENEMY_JET = readImage("src/enemyjet.png");
     public static Image BIG_SHIELD = readImage("src/bigshield.png");
     public static Image SMALL_SHIELD = readImage("src/smallshield.png");
 

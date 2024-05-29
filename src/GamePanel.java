@@ -26,7 +26,7 @@ public class GamePanel extends JPanel {
             object.tick();
         }
 
-        if (!isInBossFight() && enemyJetSpawnTimer > 400 - (3 * Math.log10(SkyForceGame.getInstance().getScoreManager().getLevel() * 100))) {
+        if (!isInBossFight() && enemyJetSpawnTimer > 200 - (3 * Math.sqrt(SkyForceGame.getInstance().getScoreManager().getLevel() * 100))) {
             enemyJetSpawnTimer = 0;
             EnemyJet jet = EnemyJet.createRandom();
             addObject(jet);

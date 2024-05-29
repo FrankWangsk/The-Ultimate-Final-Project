@@ -36,7 +36,7 @@ public class EnemyJet extends DamageableObject {
         super.onDeath();
         SkyForceGame.getInstance().getScoreManager().addScore(10);
         int chance = random.nextInt(100);
-        if (chance < 30){
+        if (chance < 20){
             ShieldBattery.spawnRandom();
         }
     }
