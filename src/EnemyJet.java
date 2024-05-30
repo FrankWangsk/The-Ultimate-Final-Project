@@ -15,13 +15,13 @@ public class EnemyJet extends DamageableObject {
 
     public static EnemyJet createRandom() {
         Vector size = new Vector(50, 50);
-        return new EnemyJet(10, randomPos(size), size,
+        return new EnemyJet(10 * SkyForceGame.getInstance().getScoreManager().getLevel(), randomPos(size), size,
                 new Vector(random.nextDouble(-5d, 5d), random.nextDouble(-5d, 5d)));
     }
 
     public static EnemyJet createBoss() {
         Vector size = new Vector(150, 150);
-        return new EnemyJet(100, randomPos(size), size, new Vector(15, 15));
+        return new EnemyJet(100 * SkyForceGame.getInstance().getScoreManager().getLevel(), randomPos(size), size, new Vector(15, 15));
     }
 
     public static Vector randomPos(Vector size) {
